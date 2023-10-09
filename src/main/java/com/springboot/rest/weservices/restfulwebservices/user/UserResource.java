@@ -30,13 +30,18 @@ public class UserResource {
 	@GetMapping("/users/{id}")
 	public User retriewUser(@PathVariable int id)//@PathVariable is used to get the parameters that we set on the  URL to get the data
 	{
-		return service.findOne(id);
+		
+		User user = service.findOne(id);
+		if(user==null)
+			throw new UserNotFoundException("id: "+id); //For creation of user defined Exception
+		return user;
 	}
 	
 	@PostMapping("/users")
 	public ResponseEntity<User> createUser(@RequestBody User user) //@RequestBody is to get the added data from POST service in talendAPI application
 	{ 
 		User newUser=service.save(user);
+		
 		URI location=ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.getId()).toUri();
 		return ResponseEntity.created(location).build();
 		}
