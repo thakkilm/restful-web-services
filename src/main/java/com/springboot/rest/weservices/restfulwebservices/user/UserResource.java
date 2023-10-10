@@ -20,6 +20,7 @@ public class UserResource {
 		
 	
 	  private UserDaoService service;
+	  
 
 	public UserResource(UserDaoService service) {
 		super();
