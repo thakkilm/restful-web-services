@@ -2,7 +2,10 @@ package com.springboot.rest.weservices.restfulwebservices.user;
 
 import java.net.URI;
 import java.util.List;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,13 +35,17 @@ public class UserResource {
 		return service.findAll();
 	}
 	@GetMapping("/users/{id}")
-	public User retriewUser(@PathVariable int id)//@PathVariable is used to get the parameters that we set on the  URL to get the data
+	public EntityModel<User> retriewUser(@PathVariable int id)//@PathVariable is used to get the parameters that we set on the  URL to get the data
 	{
 		
 		User user = service.findOne(id);
 		if(user==null)
 			throw new UserNotFoundException("id: "+id); //For creation of user defined Exception
-		return user;
+		
+		EntityModel<User> entityModel=EntityModel.of(user);               //All the below steps are to create HATEOAS which is used to implement tree like structre
+		WebMvcLinkBuilder link=linkTo(methodOn(this.getClass()).retriewAllUsers());
+		entityModel.add(link.withRel("all-users"));
+		return entityModel;
 	}
 	
 	@PostMapping("/users")
