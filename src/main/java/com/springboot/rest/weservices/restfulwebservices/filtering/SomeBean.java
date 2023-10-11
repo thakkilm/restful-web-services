@@ -1,15 +1,17 @@
 package com.springboot.rest.weservices.restfulwebservices.filtering;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
-@JsonIgnoreProperties({"field1"})//Ignoring at class level
+//@JsonIgnoreProperties({"field1"})//Ignoring at class level Static filtering
+@JsonFilter("SomeBean")
 public class SomeBean {
 	
 	private String field1;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	private String field2; //this field gets ignored from being displayed
 	private String field3;
 	public SomeBean(String field1, String field2, String field3) {

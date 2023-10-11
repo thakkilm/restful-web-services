@@ -1,16 +1,26 @@
 package com.springboot.rest.weservices.restfulwebservices.user;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
+import org.hibernate.annotations.ManyToAny;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
-public class User {
 
+@Entity(name="user_details")
+public class User {
+	User(){}
+	@Id
+	@GeneratedValue
 	private Integer id;
 	@Size(min = 2,message="Size error")
 	@JsonProperty("birth_name")
@@ -18,6 +28,9 @@ public class User {
 	@Past(message="Date is in future")
 	private LocalDate birthDate;
 
+	@OneToMany(mappedBy = "user")	
+	private List<Post> posts;
+	
 	public User(Integer id, String name, LocalDate birthDate) {
 		super();
 
@@ -50,6 +63,14 @@ public class User {
 
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 	@Override
