@@ -1,5 +1,4 @@
-# Creating restful-web-services
-
-For Handling Bad responses, i have created the ExceptionHandler by extending ResponseEntityExceptionHandler class
-For documentation of API's i have used the Swagger-ui dependecies
-For Content Nagotiation (Converting json to XML and vise versa) i have used the com.fasterxml.jackson.dataformat dependency
+Creating restful-web-services
+To handle bad responses, I have created an ExceptionHandler by extending the ResponseEntityExceptionHandler class.
+For the documentation of APIs, I have used the Swagger-UI dependencies.
+For content negotiation (converting JSON to XML and vice versa), I have used the com.fasterxml.jackson.dataformat dependency.
